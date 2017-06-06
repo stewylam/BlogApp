@@ -1,5 +1,6 @@
 const fs = require('fs')
 const express = require('express')
+const pug = require('pug')
 const pg = require ('pg')
 const bodyParser = require('body-parser')
 const session = require('express-session');
@@ -7,8 +8,10 @@ const cookieParser = require('cookie-parser')
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('postgres://' + process.env.POSTGRES_USER + ':' + process.env.POSTGRES_PASSWORD + '@localhost/blogapp');
 
-
 const app = express();
+
+app.set('views', './views');
+app.set('view engine', 'pug');
 
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.urlencoded({extended: true})); // get information from html forms
@@ -19,6 +22,7 @@ app.use(session({
     saveUninitialized: false
 }));
 
+// defines the table, keys and datatypes.
 const User = sequelize.define('user', {
   username: Sequelize.STRING,
   password: Sequelize.STRING
@@ -27,12 +31,11 @@ const User = sequelize.define('user', {
 //create tables -- if tables exists, then leave it
 sequelize.sync()
       
-
-
 app.get('/', (req, res) => {
-    res.sendFile('index.html')
+    res.render('index')
 });
 
+// the information gets read from the form. And creates a new username.
 app.post('/', (req, res) => {
     const username = req.body.user
     const password = req.body.pass
@@ -43,6 +46,11 @@ app.post('/', (req, res) => {
     .then( () => {
         res.redirect('/')
     })
+})
+
+app.post('/blog', (req, res) => {
+
+
 })
 
 

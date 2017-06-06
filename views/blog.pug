@@ -1,0 +1,11 @@
+doctype html
+html
+	head
+		title Blog
+	body
+		form(action='/', method='get', autocomplete='off')
+			p Create your post:
+			label <b>Message:</b>
+			br
+			textarea(type='text', name='message', style='width: 350px;height: 150px')
+			button(type='submit', value='Submit Message') Submit Message
