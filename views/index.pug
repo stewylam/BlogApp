@@ -1,16 +1,30 @@
 doctype html
 html
 	head
-		title Welcome
+		title Bloggie
 	body
-	form.register(method='post')
-		h3 Login or Register:
+		h1 Bloggie
+
+		form(class='logg' action='/login', method='post', autocomplete='off')
+			p Username:
+			input(type='password', name='user') 
+			p Password:
+			input(type='text', name='pass')
+			br
+			br
+			input(type='submit', value='login')
+
 		br
-		p Username: 
-		input(type='text', name='user')
-		br
-		p Password 
-		input(type='password', name='pass')
 		br
 		br
-		input(type='submit', value='Register / Login')
+
+		form(class='sign' action='/sign up', method='post', autocomplete='off')
+			fieldset
+				legend <u><b>New</u></b> to Bloggie? Register first and start blogging!  
+				p Choose Username:
+				input(type='password', name='nUser')
+				p Choose Password:
+				input(type='text', name='nPass')
+				br
+				br
+				input(type='submit', value='Sign Up')
