@@ -126,12 +126,12 @@ app.get('/logout', function (req, res) {
         if(err) {
             throw err;
         }
-        res.render('index', {message: 'Successfully logged out.'});
+        res.render('login', {message: 'Successfully logged out.'});
     });
 });  
 
 
-// profile page
+//// profile page
 app.get('/profile', (req, res) => {
     var user = req.session.user;
     
@@ -145,7 +145,6 @@ app.get('/profile', (req, res) => {
 });
 
 app.post('/profile', (req, res) => {
-
     var username = req.body.name
     var message= req.body.mess
 
@@ -158,6 +157,16 @@ app.post('/profile', (req, res) => {
     })
 });
 
+////// all posts
+app.get('/blog', (req, res) => {
+    var user = req.session.user;
+
+    if (user === undefined) {
+        res.redirect('/login', {message: 'Please log in to view bloggie.'});
+    } else {
+    res.render('blog');
+    }
+})
 
 const server = app.listen(8080, () => {
     console.log('server has started at ', server.address().port)

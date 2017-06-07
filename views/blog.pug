@@ -3,15 +3,19 @@ html
 	head
 	title Blog
 	body
-		a(href='/all') All messages
+		a(href='/') Home
 		br
-		a(href='/logout') Log Out
-		form(action='/', method='get', autocomplete='off')
+		a(class='button' href='/profile') Profile
+		br
+		a(href='/logout') Log out
+
+		form(action='/blog', method='get', autocomplete='off')
 			p Create your post:
 			label <b>Message:</b>
 			br
 			textarea(type='text', name='message', style='width: 350px;height: 150px')
 			br
 			button(type='submit', value='Submit Message') Submit Message
+
 
 
