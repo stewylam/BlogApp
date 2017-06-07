@@ -51,17 +51,32 @@ app.get('/', (req, res) => {
 });
 
 app.get('/sign', (req, res) => {
-    res.render('login')
+    res.render('sign', {user: req.session.user})
 });
 
 app.post('/sign', (req, res) => {
 
+    var nUsername = req.body.nUser
+    var nPassword = req.body.nPass
+
+    User.create({
+        username: nUsername,
+        password: nPassword
+    }).then(function() {
+        res.redirect('/login');
+    })
 });
 
 
 app.get('/login', (req, res) => {
     res.render('login')
 });
+
+app.post('/login', (req, res) => {
+    res.render('login')
+});
+
+
 
 const server = app.listen(8080, () => {
     console.log('server has started at ', server.address().port)
