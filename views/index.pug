@@ -3,10 +3,24 @@ html
 	head
 		title Bloggie
 	body
+		a(class='button' href='/') Home
+		br
+		a(class='button' href='/profile') Profile
+		br
 		h1 Welcome to Bloggie
 		p Start sharing your messages on bloggie.
-		
-		a(href='/sign') Sign up
+
+		form(class='sign' action='/', method='post', autocomplete='off')
+			fieldset
+				legend <u><b>New</u></b> to Bloggie? Register first and start blogging!  
+				p(style= 'color: red') #{message}
+				p Choose Username:
+				input(type='text', name='nUser')
+				p Choose Password:
+				input(type='password', name='nPass')
+				br
+				br
+				input(type='submit', value='Register')
 
 		p already a bloggie? Log in <a href='/login'>here
 

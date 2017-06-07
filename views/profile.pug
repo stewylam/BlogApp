@@ -1,0 +1,26 @@
+doctype html
+html
+	head
+		title Bloggie
+	body
+		a(href='/') Home
+		br
+		a(href='/logout') Log out
+		h1 Welcome to your profile!
+		p Start blogging
+		p #{message}
+		form(action='/profile', method='post', autocomplete='off')
+		label <b>From:</b> #{username}
+		label <b>Message:</b>
+		br
+		textarea(type='text', name='mess', style='width: 350px;height: 150px')
+		button(type='submit', value='Submit Message') Submit Message
+
+		h2 Your messages:
+		each message in messages
+					p <b>#{message.username}</b> 
+					<br /> #{message.message}
+
+
+
+

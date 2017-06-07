@@ -25,7 +25,9 @@ app.use(session({
 //create tables -- if tables exists, then leave it
 sequelize.sync()
 
-// defines the table, keys and datatypes.
+
+////// defines the table, keys and datatypes.
+
 //user model
 const User = sequelize.define('user', {
   username: Sequelize.STRING,
@@ -33,49 +35,135 @@ const User = sequelize.define('user', {
 });
 
 // message model
-const Post = sequelize.define('post', {
+const Message = sequelize.define('post', {
   username: Sequelize.STRING,
-  Message: Sequelize.TEXT
+  message: Sequelize.TEXT
 });
 
 //comment model
 const Comment = sequelize.define('comment', {
   username: Sequelize.STRING,
-  Message: Sequelize.TEXT
+  comment: Sequelize.TEXT
 });
 
+////// different routes
 
-      
 app.get('/', (req, res) => {
     res.render('index')
 });
 
-app.get('/sign', (req, res) => {
-    res.render('sign', {user: req.session.user})
+
+///// user management
+
+app.get('/', (req, res) => {
+    res.render('/', {user: req.session.user})
 });
 
-app.post('/sign', (req, res) => {
+//// register new user
+app.post('/', (req, res) => {
 
     var nUsername = req.body.nUser
     var nPassword = req.body.nPass
 
-    User.create({
-        username: nUsername,
-        password: nPassword
-    }).then(function() {
-        res.redirect('/login');
-    })
+    User.findOne({
+        where: {
+            username: nUsername
+        }
+    }).then( user => {
+        console.log(user)
+        if(user){
+            res.render('index', {message: 'Aah, look like you missed the boat, another user already picked out this cool username. Try another one!'});
+        } else {
+            User.create({
+                username: nUsername,
+                password: nPassword
+            }).then(function() {
+            res.render('login', {message: 'Congrats, you are Succesfully registered as a bloggie. Login to start blogging!'});
+            })
+        }
+    });
+
+    
 });
 
 
 app.get('/login', (req, res) => {
-    res.render('login')
+    res.render('login', {
+        user: req.session.user
+    })
 });
 
+//// login 
 app.post('/login', (req, res) => {
-    res.render('login')
+    var username = req.body.user
+    var password = req.body.pass
+
+    if(username.length === 0) {
+        res.render('login', {message: 'Please fill out your username.'});
+        return;
+    }
+
+    if(password.length === 0) {
+        res.render('/login', {message: 'Please fill out your password.'});
+        return;
+    }
+
+
+    User.findOne({
+        where: {
+            username: username
+        }
+    })
+
+    .then(function(user){
+        if(username !== null && password === user.password) {
+            req.session.user = user;
+            res.render('profile', {username: username})
+            console.log('logged in succesfully')
+        } else {
+            res.render('login', {message: 'Oops Invalid email or password'});
+            console.log('Invalid username or password');
+        }
+    });
 });
 
+//// logout
+app.get('/logout', function (req, res) {
+    req.session.destroy(function (err) {
+        if(err) {
+            throw err;
+        }
+        res.render('index', {message: 'Successfully logged out.'});
+    });
+});  
+
+
+// profile page
+app.get('/profile', (req, res) => {
+    var user = req.session.user;
+    
+    if (user === undefined) {
+        res.redirect('/', {message: 'Please log in or register to view your profile.'});
+    } else {
+        res.render('profile', {
+            user: user, username: username
+        });
+    }
+});
+
+app.post('/profile', (req, res) => {
+
+    var username = req.body.name
+    var message= req.body.mess
+
+    Message.create({
+        username: username,
+        message: message
+    }).then(function() {
+            console.log('message posted')
+            res.render('profile', {message: 'Message Posted Succesfully', username: username});
+    })
+});
 
 
 const server = app.listen(8080, () => {

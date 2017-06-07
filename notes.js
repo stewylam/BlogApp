@@ -1,3 +1,75 @@
+    if (req.body.username.length === 0){
+        res.redirect('/login/?message=' + encodeURIComponent("Please fill out your username."))
+    }
+    if (req.body.password.length === 0){
+        res.redirect('/login/?message=' + encodeURIComponent("Please fill out your password."))
+    }
+
+    User.findOne({
+        where: {
+            username: req.body.username
+        }
+    }).then(function(user){
+        if(result === true) {
+            req.session.user = user;
+            res.redirect('/profile/'+user.username)
+        } else {
+            res.redirect('/login/?message=' + encodeURIComponent("Invalid username or password."))
+            }
+        })
+});
+
+
+
+app.post('/login', function(request, response) {
+    User.findOne({
+        where: {
+            name: request.body.username
+        }
+    }).then(function(user) {
+        if(user != null){
+                bcrypt.compare(user.password, request.body.userpass, function(err, res) {
+                    request.session.lastPage = 'login';
+                    request.session.userid = user.id;
+                    request.session.username = user.name;
+                    console.log('Succesfully logged in as: ' + user.name);
+                    response.redirect('/')
+                })
+            } else{
+                response.send('Unknown username or invalid password!')
+            }
+    })
+})
+
+
+
+
+
+
+
+app.post('/', (req, res) => {
+    var nUsername = req.body.nUser
+    var nPassword = req.body.nPass
+    
+    User.findOne({
+        where: {username: nUsername
+        }
+    })
+
+    .then(res => {
+        if(nUsername === username[i] ) {
+            res.redirect('/')
+            res.send('Username already exists')
+        } else {
+            User.create({
+                username: nUsername,
+                password: nPassword
+            })
+        res.send('Created new user succesfully')
+        res.redirect('/login')
+        }
+    
+    })
 
 /*app.post('/signup', (req, res) => {
     var nUsername = req.body.nUser

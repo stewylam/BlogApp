@@ -4,10 +4,15 @@ html
 		title Bloggie
 	body
 		h1 Bloggie
-
-		form(class='logg' action='/', method='post', autocomplete='off')
+		a(class='button' href='/') Home
+		br
+		a(class='button' href='/profile') Profile
+		br
+		br
+		form(class='logg' action='/login', method='post', autocomplete='off')
 			fieldset
 				legend Login to see all blog messages and start blogging.
+				p(style= 'color: red') #{message}
 				p Username:
 				input(type='text', name='user') 
 				p Password:
@@ -18,3 +23,4 @@ html
 		
 		p New to bloggie? Register <a href='/'>first!
 		<a href='/'>Home
+
