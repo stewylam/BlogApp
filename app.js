@@ -22,23 +22,47 @@ app.use(session({
     saveUninitialized: false
 }));
 
+//create tables -- if tables exists, then leave it
+sequelize.sync()
+
 // defines the table, keys and datatypes.
+//user model
 const User = sequelize.define('user', {
   username: Sequelize.STRING,
   password: Sequelize.STRING
 });
 
-//create tables -- if tables exists, then leave it
-sequelize.sync()
+// message model
+const Post = sequelize.define('post', {
+  username: Sequelize.STRING,
+  Message: Sequelize.TEXT
+});
+
+//comment model
+const Comment = sequelize.define('comment', {
+  username: Sequelize.STRING,
+  Message: Sequelize.TEXT
+});
+
+
       
 app.get('/', (req, res) => {
     res.render('index')
 });
 
+app.get('/sign', (req, res) => {
+    res.render('login')
+});
 
+app.post('/sign', (req, res) => {
+
+});
+
+
+app.get('/login', (req, res) => {
+    res.render('login')
+});
 
 const server = app.listen(8080, () => {
     console.log('server has started at ', server.address().port)
 }); // application is listens to the request. And everytime the browser goes to localhost:8080 it will print out "Server has started at".
-
-

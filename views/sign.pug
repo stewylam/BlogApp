@@ -1,0 +1,19 @@
+doctype html
+html
+	head
+		title Bloggie
+	body
+		h1 Welcome to Bloggie
+
+		form(class='sign' action='/login', method='post', autocomplete='off')
+			fieldset
+				legend <u><b>New</u></b> to Bloggie? Register first and start blogging!  
+				p Choose Username:
+				input(type='text', name='nUser')
+				p Choose Password:
+				input(type='password', name='nPass')
+				br
+				br
+				input(type='submit', value='Sign Up')
+
+		p already a bloggie? Log in <a href='/login'>here

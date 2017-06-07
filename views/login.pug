@@ -1,0 +1,19 @@
+doctype html
+html
+	head
+		title Bloggie
+	body
+		h1 Bloggie
+
+		form(class='logg' action='/', method='post', autocomplete='off')
+			fieldset
+				legend Login to see all blog messages and start blogging.
+				p Username:
+				input(type='text', name='user') 
+				p Password:
+				input(type='password', name='pass')
+				br
+				br
+				input(type='submit', value='Login')
+		
+		p New to bloggie? Register <a href='/'>first!

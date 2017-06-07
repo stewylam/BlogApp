@@ -3,28 +3,9 @@ html
 	head
 		title Bloggie
 	body
-		h1 Bloggie
+		h1 Welcome to Bloggie
+		p Start sharing your messages on bloggie.
+		
+		a(href='/sign') Sign up
 
-		form(class='logg' action='/login', method='post', autocomplete='off')
-			p Username:
-			input(type='password', name='user') 
-			p Password:
-			input(type='text', name='pass')
-			br
-			br
-			input(type='submit', value='login')
-
-		br
-		br
-		br
-
-		form(class='sign' action='/sign up', method='post', autocomplete='off')
-			fieldset
-				legend <u><b>New</u></b> to Bloggie? Register first and start blogging!  
-				p Choose Username:
-				input(type='password', name='nUser')
-				p Choose Password:
-				input(type='text', name='nPass')
-				br
-				br
-				input(type='submit', value='Sign Up')
+		p already a bloggie? Log in <a href='/login'>here
