@@ -98,16 +98,10 @@ app.post('/login', (req, res) => {
     var username = req.body.user
     var password = req.body.pass
 
-    if(username.length === 0) {
-        res.render('login', {message: 'Please fill out your username.'});
+    if(username.length === 0 || password.length === 0) {
+        res.render('login', {message: 'Please fill out your username/password.'});
         return;
     }
-
-    if(password.length === 0) {
-        res.render('/login', {message: 'Please fill out your password.'});
-        return;
-    }
-
 
     User.findOne({
         where: {
@@ -121,8 +115,7 @@ app.post('/login', (req, res) => {
             res.render('profile', {username: username})
             console.log('logged in succesfully')
         } else {
-            res.render('login', {message: 'Oops Invalid email or password'});
-            console.log('Invalid username or password');
+            res.render('login', {message: 'Oopsie Invalid username/password'});
         }
     });
 });

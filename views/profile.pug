@@ -6,7 +6,7 @@ html
 		a(href='/') Home
 		br
 		a(href='/logout') Log out
-		h1 Welcome to your profile!
+		h1 Welcome to your profile #{username}!
 		p Start blogging
 		p #{message}
 		form(action='/profile', method='post', autocomplete='off')
@@ -17,9 +17,9 @@ html
 		button(type='submit', value='Submit Message') Submit Message
 
 		h2 Your messages:
-		each message in messages
-					p <b>#{message.username}</b> 
-					<br /> #{message.message}
+		//- each message in messages
+		//- 			p <b>#{message.username}</b> 
+		//- 			<br /> #{message.message}
 
 
 
