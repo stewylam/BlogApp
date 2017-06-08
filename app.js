@@ -29,6 +29,9 @@ sequelize.sync()
 
 //user model
 const User = sequelize.define('user', {
+  first: Sequelize.STRING,
+  last: Sequelize.STRING,
+  email: Sequelize.STRING,
   username: Sequelize.STRING,
   password: Sequelize.STRING
 });
@@ -68,7 +71,9 @@ app.get('/', (req, res) => {
 
 //// register new user
 app.post('/', (req, res) => {
-
+    var first = req.body.first
+    var last = req.body.last
+    var email = req.body.email
     var nUsername = req.body.nUser
     var nPassword = req.body.nPass
 
@@ -81,6 +86,9 @@ app.post('/', (req, res) => {
             res.render('index', {user: user, message: 'Aah, look like you missed the boat, another user already picked out this cool username. Try another one!'});
         } else {
             User.create({
+                first: first,
+                last: last,
+                email: email,
                 username: nUsername,
                 password: nPassword
             }).then(function() {
@@ -143,17 +151,15 @@ app.get('/profile', (req, res) => {
     if (user === undefined) {
         res.render('index', {user: user, message: 'Please log in or register to view your profile.'});
     } else {
-        res.render('profile', {
-            user: user
-        });
+        User.findAll().then(
+        res.render('profile', {user: user})
+        );
     }
 });
 
 /*app.post('/profile', (req, res) => {
-    var username = req.body.name
-    var message= req.body.mess
 
-    Post.create({
+    User.findAll({
         username: username,
         message: message
     }).then(function() {
@@ -167,7 +173,7 @@ app.get('/blog', (req, res) => {
     var user = req.session.user;
 
     if (user === undefined) {
-        res.render('login', {user: user, username: username, message: 'Please log in to view bloggie.'});
+        res.render('login', {user: user, message: 'Please log in to view bloggie.'});
     } else {
     Post.findAll({
             include: [ {
@@ -185,13 +191,13 @@ app.post('/blog', (req, res) => {
     var post = req.body.body
 
     if (user === undefined) {
-            res.render('login', {user: user, username: username, message: 'Please log in to view bloggie.'});
+            res.render('login', {user: user, message: 'Please log in to view bloggie.'});
         } else {
             Post.create({
                 body: post, 
                 userId: user.id
         }).then(function() {
-                res.redirect('blog');
+                res.redirect('/blog');
         })
     }
 });

@@ -18,11 +18,17 @@ html
 			br
 			button(type='submit', value='Submit Message') Submit Message
 			br
-		h3 All messages
+			br
+			br
+		h3 Message Board
 		each post in posts.reverse()
 			p #{post.body}
 			p <i>Message from: #{post.user.username}</i>
 			p #{post.createdAt}
+			form(action='/blog', method='post', autocomplete='off')
+			textarea(type='text', name='body', style='width: 350px;height: 50px', value='Comment')
+			button(type='submit', value='Comment') Comment
+
 
 
 
