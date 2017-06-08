@@ -8,13 +8,11 @@ html
 		a(class='button' href='/profile') Profile
 		br
 		a(href='/logout') Log out
-		form(action='/blog', method='post', autocomplete='off')
-			input(type='text', name='Search', placeholder='search')
 
 		form(action='/blog', method='post', autocomplete='off')
 			p(style= 'color: red') #{message}
 			p Create your post:
-			label <b>Message:</b>
+			input(type='text', name='title', placeholder='Title')
 			br
 			textarea(type='text', name='body', style='width: 350px;height: 150px', placeholder='What would you like to share?')
 			br
@@ -22,10 +20,10 @@ html
 			br
 			br
 			br
-		h3 Message Board
+		h3 All Blogs
 		each post in posts.reverse()
-			p #{post.body}
-			p <i>Message from: #{post.user.username}</i>
+			p Title: #{post.title}
+			p <i>Written by: #{post.user.username}</i>
 			p #{post.createdAt}
 			form(action='/blog', method='post', autocomplete='off')
 			textarea(type='text', name='body', style='width: 350px;height: 50px', placeholder='Comment')

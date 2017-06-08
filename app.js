@@ -38,12 +38,12 @@ const User = sequelize.define('user', {
 
 // message model
 const Post = sequelize.define('post', {
+  title: Sequelize.TEXT,
   body: Sequelize.TEXT
 });
 
 //comment model
 const Comment = sequelize.define('comment', {
-  username: Sequelize.STRING,
   comment: Sequelize.TEXT
 });
 
@@ -151,12 +151,34 @@ app.get('/profile', (req, res) => {
     if (user === undefined) {
         res.render('index', {user: user, message: 'Please log in or register to view your profile.'});
     } else {
-        User.findAll().then(
-        res.render('profile', {user:user})
-        );
+        User.findAll({
+            include: [{
+                model: User
+            }]
+        }).then((posts)=> {
+            res.render('profile', {title: title, body: body, posts: posts, user: user})
+        })
     }
 });
 
+app.post('/profile', (req, res) => {
+    var user = req.session.user;
+    var title = req.body.title
+    var body = req.body.body
+
+    if (user === undefined) {
+            res.render('login', {user: user, message: 'Please log in to view bloggie.'});
+        } else {
+            Post.create({
+                title: title,
+                body: body, 
+                userId: user.id
+        }).then(function() {
+                res.redirect('/profile', {title: title, body: body, post: posts, user: user});
+        })
+    }
+
+})
 /*app.post('/profile', (req, res) => {
 
     User.findAll({
@@ -188,12 +210,14 @@ app.get('/blog', (req, res) => {
 
 app.post('/blog', (req, res) => {
     var user = req.session.user;
+    var title = req.body.title
     var post = req.body.body
 
     if (user === undefined) {
             res.render('login', {user: user, message: 'Please log in to view bloggie.'});
         } else {
             Post.create({
+                title: title,
                 body: post, 
                 userId: user.id
         }).then(function() {
