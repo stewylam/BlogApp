@@ -152,7 +152,7 @@ app.get('/profile', (req, res) => {
         res.render('index', {user: user, message: 'Please log in or register to view your profile.'});
     } else {
         User.findAll().then(
-        res.render('profile', {user: user})
+        res.render('profile', {user:user})
         );
     }
 });
