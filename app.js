@@ -78,15 +78,14 @@ app.post('/', (req, res) => {
             username: nUsername
         }
     }).then( user => {
-        console.log(user)
         if(user){
-            res.render('index', {message: 'Aah, look like you missed the boat, another user already picked out this cool username. Try another one!'});
+            res.render('index', {user: user, message: 'Aah, look like you missed the boat, another user already picked out this cool username. Try another one!'});
         } else {
             User.create({
                 username: nUsername,
                 password: nPassword
             }).then(function() {
-            res.render('login', {message: 'Congrats, you are Succesfully registered as a bloggie. Login to start blogging!'});
+            res.render('login', {user: user, message: 'Congrats, you are Succesfully registered as a bloggie. Login to start blogging!'});
             })
         }
     });
@@ -120,10 +119,9 @@ app.post('/login', (req, res) => {
     .then(function(user){
         if(username !== null && password === user.password) {
             req.session.user = user;
-            res.render('profile', {username: username})
-            console.log('logged in succesfully')
+            res.render('profile', {user: user, username: username})
         } else {
-            res.render('login', {message: 'Oopsie Invalid username/password'});
+            res.render('login', {message: 'Oopsie, Invalid username/password. Try Again!'});
         }
     });
 });
@@ -144,10 +142,10 @@ app.get('/profile', (req, res) => {
     var user = req.session.user;
     
     if (user === undefined) {
-        res.render('index', {message: 'Please log in or register to view your profile.'});
+        res.render('index', {user: user, username: username, message: 'Please log in or register to view your profile.'});
     } else {
         res.render('profile', {
-            user: user, username: username
+            user: user
         });
     }
 });
@@ -170,14 +168,12 @@ app.get('/blog', (req, res) => {
     var user = req.session.user;
 
     if (user === undefined) {
-        res.render('login', {message: 'Please log in to view bloggie.'});
+        res.render('login', {user: user, username: username, message: 'Please log in to view bloggie.'});
     } else {
     Post.findAll()
         .then((posts)=> {
-        console.log(posts);
-        res.render('blog', {posts: posts, user: user, message: 'Message posted'})
-
-    });
+        res.render('blog', {posts: posts, user: user})
+        });
     }
 })
 
@@ -186,14 +182,13 @@ app.post('/blog', (req, res) => {
     var post = req.body.body
 
     if (user === undefined) {
-            res.render('login', {message: 'Please log in to view bloggie.'});
+            res.render('login', {user: user, username: username, message: 'Please log in to view bloggie.'});
         } else {
             Post.create({
                 body: post, 
                 userId: user.id
         }).then(function() {
-                console.log('Message posted')
-                res.render('blog', {posts: post, user: user, message: 'Message posted'});
+                res.redirect('blog');
         })
     }
 });

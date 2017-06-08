@@ -19,8 +19,12 @@ html
 			button(type='submit', value='Submit Message') Submit Message
 			br
 		h3 All messages
-		each post in posts
-			p <b>#{post.body}
+		each post in posts.reverse()
+			p #{post.body}
+			p <i>Message from: #{post.userId}</i>
+			p #{post.createdAt}
+
+
 
 
 
