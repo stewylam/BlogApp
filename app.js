@@ -35,9 +35,8 @@ const User = sequelize.define('user', {
 });
 
 // message model
-const Message = sequelize.define('post', {
-  username: Sequelize.STRING,
-  message: Sequelize.TEXT
+const Post = sequelize.define('post', {
+  body: Sequelize.TEXT
 });
 
 //comment model
@@ -45,6 +44,15 @@ const Comment = sequelize.define('comment', {
   username: Sequelize.STRING,
   comment: Sequelize.TEXT
 });
+
+///// define different relations
+User.hasMany(Post);
+Post.belongsTo(User);
+User.hasMany(Comment);
+Comment.belongsTo(User);
+Post.hasMany(Comment);
+Comment.belongsTo(Post);
+
 
 ////// different routes
 
@@ -136,7 +144,7 @@ app.get('/profile', (req, res) => {
     var user = req.session.user;
     
     if (user === undefined) {
-        res.redirect('/', {message: 'Please log in or register to view your profile.'});
+        res.render('index', {message: 'Please log in or register to view your profile.'});
     } else {
         res.render('profile', {
             user: user, username: username
@@ -144,29 +152,51 @@ app.get('/profile', (req, res) => {
     }
 });
 
-app.post('/profile', (req, res) => {
+/*app.post('/profile', (req, res) => {
     var username = req.body.name
     var message= req.body.mess
 
-    Message.create({
+    Post.create({
         username: username,
         message: message
     }).then(function() {
             console.log('message posted')
             res.render('profile', {message: 'Message Posted Succesfully', username: username});
     })
-});
+});*/
 
 ////// all posts
 app.get('/blog', (req, res) => {
     var user = req.session.user;
 
     if (user === undefined) {
-        res.redirect('/login', {message: 'Please log in to view bloggie.'});
+        res.render('login', {message: 'Please log in to view bloggie.'});
     } else {
-    res.render('blog');
+    Post.findAll()
+        .then((posts)=> {
+        console.log(posts);
+        res.render('blog', {posts: posts, user: user, message: 'Message posted'})
+
+    });
     }
 })
+
+app.post('/blog', (req, res) => {
+    var user = req.session.user;
+    var post = req.body.body
+
+    if (user === undefined) {
+            res.render('login', {message: 'Please log in to view bloggie.'});
+        } else {
+            Post.create({
+                body: post, 
+                userId: user.id
+        }).then(function() {
+                console.log('Message posted')
+                res.render('blog', {posts: post, user: user, message: 'Message posted'});
+        })
+    }
+});
 
 const server = app.listen(8080, () => {
     console.log('server has started at ', server.address().port)

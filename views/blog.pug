@@ -9,13 +9,20 @@ html
 		br
 		a(href='/logout') Log out
 
-		form(action='/blog', method='get', autocomplete='off')
+		form(action='/blog', method='post', autocomplete='off')
+			p(style= 'color: red') #{message}
 			p Create your post:
 			label <b>Message:</b>
 			br
-			textarea(type='text', name='message', style='width: 350px;height: 150px')
+			textarea(type='text', name='body', style='width: 350px;height: 150px')
 			br
 			button(type='submit', value='Submit Message') Submit Message
+			br
+		h3 All messages
+		each post in posts
+			p <b>#{post.body}
+
+
 
 
 

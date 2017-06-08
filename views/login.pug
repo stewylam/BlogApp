@@ -4,19 +4,14 @@ html
 		title Bloggie
 	body
 		h1 Bloggie
-		a(class='button' href='/') Home
-		br
-		a(class='button' href='/profile') Profile
-		br
-		br
 		form(class='logg' action='/login', method='post', autocomplete='off')
 			fieldset
 				legend Login to see all blog messages and start blogging
 				p(style= 'color: red') #{message}
 				p Username:
-				input(type='text', name='user') 
+				input(type='text', name='user' value='sl') 
 				p Password:
-				input(type='password', name='pass')
+				input(type='password', name='pass' value='sl')
 				br
 				br
 				input(type='submit', value='Login')
