@@ -1,7 +1,6 @@
 const fs = require('fs')
 const express = require('express')
 const pug = require('pug')
-const pg = require ('pg')
 const bodyParser = require('body-parser')
 const session = require('express-session');
 const cookieParser = require('cookie-parser')
@@ -142,7 +141,7 @@ app.get('/profile', (req, res) => {
     var user = req.session.user;
     
     if (user === undefined) {
-        res.render('index', {user: user, username: username, message: 'Please log in or register to view your profile.'});
+        res.render('index', {user: user, message: 'Please log in or register to view your profile.'});
     } else {
         res.render('profile', {
             user: user
@@ -170,7 +169,11 @@ app.get('/blog', (req, res) => {
     if (user === undefined) {
         res.render('login', {user: user, username: username, message: 'Please log in to view bloggie.'});
     } else {
-    Post.findAll()
+    Post.findAll({
+            include: [ {
+                model: User
+            }]
+        })
         .then((posts)=> {
         res.render('blog', {posts: posts, user: user})
         });

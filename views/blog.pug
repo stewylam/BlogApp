@@ -21,7 +21,7 @@ html
 		h3 All messages
 		each post in posts.reverse()
 			p #{post.body}
-			p <i>Message from: #{post.userId}</i>
+			p <i>Message from: #{post.user.username}</i>
 			p #{post.createdAt}
 
 
