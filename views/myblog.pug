@@ -1,24 +1,28 @@
 doctype html
 html
 	head
-	title Blog
+		title Bloggie
 	body
 		a(href='/') Home
 		br
+		a(href='/blog') Bloggie
+		br
 		a(class='button' href='/profile') Profile
 		br
-		a(class='button' href='/myblog') Your Bloggie
-		br
 		a(href='/logout') Log out
-		h3 All Blogs
+		h1 Overview your blogs
+		br
 		each post in posts.reverse()
 			p Title: <b>#{post.title}</b>
+			p Blog: 
+			p #{post.body}
 			p <i>Written by: #{post.user.username}</i>
 			p #{post.createdAt}
-			hr(size='1')
+			hr(size='2')
 
 
 
+			
 
 
 
