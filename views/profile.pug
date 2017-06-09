@@ -8,10 +8,10 @@ html
 		a(href='/blog') Bloggie
 		br
 		a(href='/logout') Log out
-		h1 Welcome to your profile <u>#{user.username}</u>!
-		p <b>Name:</b> #{user.first} #{user.last}
-		p <b>Email:</b> #{user.email}
-		p <b>Username:</b> #{username}
+		//- h1 Welcome to your profile <u>#{post.user.username}</u>
+		//- p <b>Name:</b> #{post.user.first} #{post.user.last}
+		//- p <b>Email:</b> #{post.user.email}
+		//- p <b>Username:</b> #{post.username}
 
 		p Start blogging
 		form(action='/profile', method='post', autocomplete='off')
@@ -22,8 +22,12 @@ html
 			button(type='submit', value='Submit Message') Submit Your Blog
 
 		h3 All your blogs
-			p #{title}
-			p #{body}
+		each post in posts
+			p Title: #{post.title}
+			p <i>Written by: #{post.user.username}</i>
+			p #{post.createdAt}
+
+
 
 			
 

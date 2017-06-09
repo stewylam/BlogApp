@@ -126,7 +126,7 @@ app.post('/login', (req, res) => {
     .then(function(user){
         if(username !== null && password === user.password) {
             req.session.user = user;
-            res.render('profile', {user: user, username: username})
+            res.redirect('/profile')
         } else {
             res.render('login', {message: 'Oopsie, Invalid username/password. Try Again!'});
         }
@@ -147,17 +147,19 @@ app.get('/logout', function (req, res) {
 //// profile page
 app.get('/profile', (req, res) => {
     var user = req.session.user;
-    
+
     if (user === undefined) {
-        res.render('index', {user: user, message: 'Please log in or register to view your profile.'});
+        res.render('login', {user: user, message: 'Please log in to view bloggie.'});
     } else {
-        User.findAll({
-            include: [{
-                model: User
-            }]
-        }).then((posts)=> {
-            res.render('profile', {title: title, body: body, posts: posts, user: user})
+    Post.findAll({
+                include: [ {
+                    model: User
+                }]
         })
+        .then((posts)=> {
+        res.render('profile', {posts: posts})
+        console.log(posts);
+        });
     }
 });
 
@@ -167,15 +169,15 @@ app.post('/profile', (req, res) => {
     var body = req.body.body
 
     if (user === undefined) {
-            res.render('login', {user: user, message: 'Please log in to view bloggie.'});
-        } else {
-            Post.create({
-                title: title,
-                body: body, 
-                userId: user.id
-        }).then(function() {
-                res.redirect('/profile', {title: title, body: body, post: posts, user: user});
-        })
+        res.render('login', {user: user, message: 'Please log in to view bloggie.'});
+    } else {
+/*        Post.create({
+            title: title,
+            body: body, 
+            userId: user.id
+        }).then() => {*/
+            res.redirect('/profile', {title: title, body: body, post: posts, user: user});
+/*        }*/
     }
 
 })
@@ -204,6 +206,7 @@ app.get('/blog', (req, res) => {
         })
         .then((posts)=> {
         res.render('blog', {posts: posts, user: user})
+        console.log(posts);
         });
     }
 })
@@ -216,14 +219,9 @@ app.post('/blog', (req, res) => {
     if (user === undefined) {
             res.render('login', {user: user, message: 'Please log in to view bloggie.'});
         } else {
-            Post.create({
-                title: title,
-                body: post, 
-                userId: user.id
-        }).then(function() {
-                res.redirect('/blog');
-        })
-    }
+            res.redirect('/blog');
+        }
+
 });
 
 const server = app.listen(8080, () => {

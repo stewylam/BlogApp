@@ -8,18 +8,6 @@ html
 		a(class='button' href='/profile') Profile
 		br
 		a(href='/logout') Log out
-
-		form(action='/blog', method='post', autocomplete='off')
-			p(style= 'color: red') #{message}
-			p Create your post:
-			input(type='text', name='title', placeholder='Title')
-			br
-			textarea(type='text', name='body', style='width: 350px;height: 150px', placeholder='What would you like to share?')
-			br
-			button(type='submit', value='Submit Message') Submit Message
-			br
-			br
-			br
 		h3 All Blogs
 		each post in posts.reverse()
 			p Title: #{post.title}
