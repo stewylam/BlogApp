@@ -57,14 +57,12 @@ Comment.belongsTo(Post);
 
 
 ////// different routes
-
 app.get('/', (req, res) => {
     res.render('index')
 });
 
 
 ///// user management
-
 app.get('/', (req, res) => {
     res.render('/', {user: req.session.user})
 });
@@ -96,8 +94,6 @@ app.post('/', (req, res) => {
             })
         }
     });
-
-    
 });
 
 
@@ -193,7 +189,7 @@ app.get('/myblog', (req, res) => {
             userId: user.id
         },
         include: [{
-        model: User, Comment
+        model: User}, {model: Comment
         }]
     })
     .then(posts => {
@@ -254,7 +250,7 @@ app.get('/page', (req, res) => {
         res.render('login', {user: user, message: 'Please log in to view bloggie.'});
     } else {
 
-        Post.findAll({
+        Post.findOne({
             where: {
                 userId = user clicked on title
             }

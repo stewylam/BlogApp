@@ -11,11 +11,15 @@ html
 		br
 		a(href='/logout') Log out
 		h1 Overview of your blogs
-		br
 		each post in posts
 			p Title: <b>#{post.title}</b>
 			p Blog: 
 			p #{post.body}
-		hr(size='2')
-
-
+			hr(size='1', width='20%', align='left')
+			each comment in post.comments
+				p <i>#{comment.userId} says</i> #{comment.comment}
+			form(action='/blog', method='post', autocomplete='off')
+				input(type='text', name='comment', placeholder='Comment')
+				input(type='hidden', value=post.id, name='postId')
+				button(type='submit', value='Comment') Comment			
+			hr(size='1')
