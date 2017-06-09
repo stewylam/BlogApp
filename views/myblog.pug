@@ -10,19 +10,12 @@ html
 		a(class='button' href='/profile') Profile
 		br
 		a(href='/logout') Log out
-		h1 Overview your blogs
+		h1 Overview of your blogs
 		br
-		each post in posts.reverse()
+		each post in posts
 			p Title: <b>#{post.title}</b>
 			p Blog: 
 			p #{post.body}
-			p <i>Written by: #{post.user.username}</i>
-			p #{post.createdAt}
-			hr(size='2')
-
-
-
-			
-
+		hr(size='2')
 
 

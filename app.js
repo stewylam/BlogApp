@@ -151,18 +151,11 @@ app.get('/profile', (req, res) => {
     if (user === undefined) {
         res.render('login', {user: user, message: 'Please log in to view bloggie.'});
     } else {
-    Post.findAll({
-        include: [{
-        model: User, Comment
-        }]
+    User.findOne({
+        username: user 
     })
-/*    .then(user) => {
-        User.findOne({
-            username: user 
-        })
-    }*/
     .then((posts)=> {
-        res.render('profile', {posts: posts})
+        res.render('profile', {user: user, posts: posts})
     });
     }
 
@@ -196,15 +189,13 @@ app.get('/myblog', (req, res) => {
         res.render('login', {user: user, message: 'Please log in to view bloggie.'});
     } else {
     Post.findAll({
+        where: {
+            userId: user.id
+        },
         include: [{
         model: User, Comment
         }]
     })
-/*    .then(user) => {
-        User.findOne({
-            username: user 
-        })
-    }*/
     .then(posts => {
         res.render('myblog', {posts: posts})
     });
@@ -223,32 +214,41 @@ app.get('/blog', (req, res) => {
     } else {
     Post.findAll({
             include: [ {
-                model: User
+                model: Comment},
+                { model: User
             }]
-        })
+    })
         .then((posts)=> {
-        res.render('blog', {posts: posts, user: user})
+        res.render('blog', {posts: posts})
         console.log(posts);
         });
     }
 })
 
+
 app.post('/blog', (req, res) => {
     var user = req.session.user;
-    var title = req.body.title
-    var post = req.body.body
+    var comment = req.body.comment
 
     if (user === undefined) {
             res.render('login', {user: user, message: 'Please log in to view bloggie.'});
-        } else {
+    } else {
+        Comment.create({
+            comment: comment,
+            userId: user.id,
+            username: user.username,
+            postId: req.body.postId
+        }).then(function(comments) {
             res.redirect('/blog');
-        }
+        })
+    }
 
 });
 
 //// Specific Blog
 app.get('/page', (req, res) => {
     var user = req.session.user;
+});
 
 /*    if (user === undefined) {
         res.render('login', {user: user, message: 'Please log in to view bloggie.'});
@@ -258,11 +258,12 @@ app.get('/page', (req, res) => {
             where: {
                 userId = user clicked on title
             }
-        }).then(){*/
+        }).then(){
             res.render('page')
-/*        }
-    }*/
+        }
+    }
 });
+/*
 
 /*app.post('/page', (req, res) => {
     var post = req.body.body

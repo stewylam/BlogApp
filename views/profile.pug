@@ -7,17 +7,18 @@ html
 		br
 		a(href='/blog') Bloggie
 		br
-		a(class='button' href='/myblog') Your Bloggie
+		a(class='button' href='/myblog') Your Bloggies
 		br
 		a(href='/logout') Log out
-		h1 Welcome to your profile <u>USER</u>
-		//- p <b>Name:</b> #{post.user.first} #{post.user.last}
-		//- p <b>Email:</b> #{post.user.email}
-		//- p <b>Username:</b> #{post.username}
-
-		p Start blogging now!
+		h1 Welcome to your profile <u>#{user.username}</u>
+		p <b>Name:</b> #{user.first} #{user.last}
+		p <b>Email:</b> #{user.email}
+		p <b>Username:</b> #{user.username}
+		br
+		h2 Share you passions with the world. Start blogging now!
 		form(action='/profile', method='post', autocomplete='off')
-			input(type='text', name='title', placeholder='Title')
+			input(type='text', name='title', placeholder='Title', style='width: 350px')
+			br
 			br
 			textarea(type='text', name='body', style='width: 350px;height: 150px', placeholder='What would you like to share today?')
 			br
