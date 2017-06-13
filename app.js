@@ -5,7 +5,8 @@ const bodyParser = require('body-parser')
 const session = require('express-session');
 const cookieParser = require('cookie-parser')
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://' + process.env.POSTGRES_USER + ':' + process.env.POSTGRES_PASSWORD + '@localhost/blogapp');
+const bcrypt = require('bcrypt')
+const db = new Sequelize('postgres://' + process.env.POSTGRES_USER + ':' + process.env.POSTGRES_PASSWORD + '@localhost/blogapp');
 
 const app = express();
 
@@ -22,13 +23,13 @@ app.use(session({
 }));
 
 //create tables -- if tables exists, then leave it
-sequelize.sync()
+db.sync()
 
 
 ////// defines the table, keys and datatypes.
 
 //user model
-const User = sequelize.define('user', {
+const User = db.define('user', {
   first: Sequelize.STRING,
   last: Sequelize.STRING,
   email: Sequelize.STRING,
@@ -37,13 +38,13 @@ const User = sequelize.define('user', {
 });
 
 // message model
-const Post = sequelize.define('post', {
+const Post = db.define('post', {
   title: Sequelize.TEXT,
   body: Sequelize.TEXT
 });
 
 //comment model
-const Comment = sequelize.define('comment', {
+const Comment = db.define('comment', {
   comment: Sequelize.TEXT
 });
 
@@ -81,8 +82,11 @@ app.post('/', (req, res) => {
         }
     }).then( user => {
         if(user){
-            res.render('index', {user: user, message: 'Aah, look like you missed the boat, another user already picked out this cool username. Try another one!'});
+            res.render('index', {user: user, message: 'Aah, looks like you missed the boat, another user already picked out this cool username. Try another one!'});
         } else {
+            bcrypt.hash(nPassword, 8, function(err, hash) {
+                nPassword = hash
+           
             User.create({
                 first: first,
                 last: last,
@@ -92,8 +96,9 @@ app.post('/', (req, res) => {
             }).then(function() {
             res.render('login', {user: user, message: 'Congrats, you are Succesfully registered as a bloggie. Login to start blogging!'});
             })
+            })
         }
-    });
+    })
 });
 
 
@@ -120,14 +125,22 @@ app.post('/login', (req, res) => {
     })
 
     .then(function(user){
-        if(username !== null && password === user.password) {
-            req.session.user = user;
-            res.redirect('/profile')
-        } else {
-            res.render('login', {message: 'Oopsie, Invalid username/password. Try Again!'});
-        }
-    });
+        var hash = user.password
+        bcrypt.compare(password, hash, (err, result) => {
+            if(err) {
+                res.render('login', {message: 'Oopsie, Invalid username/password. Try Again!'});
+            } 
+            if(result === true){
+                req.session.user = user;
+                res.redirect('/profile')
+            }         
+            else{
+                res.render('login', {message: 'Oopsie, Invalid username/password. Try Again!'});
+            }
+        })
+    })
 });
+
 
 //// logout
 app.get('/logout', function (req, res) {
@@ -189,8 +202,7 @@ app.get('/myblog', (req, res) => {
             userId: user.id
         },
         include: [{
-        model: User}, {model: Comment
-        }]
+        model: User}, {model: Comment}]
     })
     .then(posts => {
         res.render('myblog', {posts: posts})
@@ -201,7 +213,7 @@ app.get('/myblog', (req, res) => {
 })
 
 
-////// all posts
+////// All Blog Posts
 app.get('/blog', (req, res) => {
     var user = req.session.user;
 
@@ -216,7 +228,6 @@ app.get('/blog', (req, res) => {
     })
         .then((posts)=> {
         res.render('blog', {posts: posts})
-        console.log(posts);
         });
     }
 })
@@ -242,9 +253,9 @@ app.post('/blog', (req, res) => {
 });
 
 //// Specific Blog
-app.get('/page', (req, res) => {
+/*app.get('/page', (req, res) => {
     var user = req.session.user;
-});
+});*/
 
 /*    if (user === undefined) {
         res.render('login', {user: user, message: 'Please log in to view bloggie.'});
@@ -280,4 +291,4 @@ app.get('/page', (req, res) => {
 
 const server = app.listen(8080, () => {
     console.log('server has started at ', server.address().port)
-}); // application is listens to the request. And everytime the browser goes to localhost:8080 it will print out "Server has started at".
+}); // application listens to the request. And everytime the browser goes to localhost:8080 it will print out "Server has started at".

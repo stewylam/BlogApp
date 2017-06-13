@@ -4,6 +4,7 @@
   "description": "Project Specification\r Create a blogging application that allows users to do the following:\r - register an account\r - login\r - logout",
   "main": "app.js",
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.15.3",

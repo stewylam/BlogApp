@@ -11,7 +11,7 @@ html
 		br
 		a(href='/logout') Log out
 		h3 All Blogs
-		each post in posts.reverse()
+		each post in posts
 			p <b>#{post.title}</b> <i>by: #{post.user.username}</i>
 			p #{post.body}
 			p #{post.createdAt}
