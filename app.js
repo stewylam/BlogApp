@@ -70,17 +70,18 @@ app.get('/', (req, res) => {
 
 //// register new user
 app.post('/', (req, res) => {
-    var first = req.body.first
-    var last = req.body.last
-    var email = req.body.email
-    var nUsername = req.body.nUser
-    var nPassword = req.body.nPass
+    let first = req.body.first
+    let last = req.body.last
+    let email = req.body.email
+    let nUsername = req.body.nUser
+    let nPassword = req.body.nPass
 
     User.findOne({
         where: {
             username: nUsername
         }
-    }).then( user => {
+    })
+    .then( user => {
         if(user){
             res.render('index', {user: user, message: 'Aah, looks like you missed the boat, another user already picked out this cool username. Try another one!'});
         } else {
@@ -110,8 +111,8 @@ app.get('/login', (req, res) => {
 
 //// login 
 app.post('/login', (req, res) => {
-    var username = req.body.user
-    var password = req.body.pass
+    let username = req.body.user
+    let password = req.body.pass
 
     if(username.length === 0 || password.length === 0) {
         res.render('login', {message: 'Please fill out your username/password.'});
@@ -125,7 +126,7 @@ app.post('/login', (req, res) => {
     })
 
     .then(function(user){
-        var hash = user.password
+        let hash = user.password
         bcrypt.compare(password, hash, (err, result) => {
             if(err) {
                 res.render('login', {message: 'Oopsie, Invalid username/password. Try Again!'});
@@ -155,12 +156,12 @@ app.get('/logout', function (req, res) {
 
 //// profile page
 app.get('/profile', (req, res) => {
-    var user = req.session.user;
+    let user = req.session.user;
 
     if (user === undefined) {
         res.render('login', {user: user, message: 'Please log in to view bloggie.'});
     } else {
-    User.findOne({
+        User.findOne({
         username: user 
     })
     .then((posts)=> {
@@ -171,20 +172,21 @@ app.get('/profile', (req, res) => {
 });
 
 app.post('/profile', (req, res) => {
-    var user = req.session.user;
-    var title = req.body.title
-    var body = req.body.body
+    let user = req.session.user;
+    let title = req.body.title
+    let body = req.body.body
 
     if (user === undefined) {
         res.render('login', {user: user, message: 'Please log in to view bloggie.'});
     } else {
-    Post.create({
-        title: title,
-        body: body, 
-        userId: user.id
-    }).then(posts => {
-        res.redirect('/myblog');
-    });
+        Post.create({
+            title: title,
+            body: body, 
+            userId: user.id
+        })
+        .then(posts => {
+            res.redirect('/myblog');
+        });
     }
 
 })
@@ -192,20 +194,20 @@ app.post('/profile', (req, res) => {
 
 ///// My Blog
 app.get('/myblog', (req, res) => {
-    var user = req.session.user;
+    let user = req.session.user;
 
     if (user === undefined) {
         res.render('login', {user: user, message: 'Please log in to view bloggie.'});
     } else {
-    Post.findAll({
-        where: {
-            userId: user.id
-        },
-        include: [{
-        model: User}, {model: Comment}]
-    })
-    .then(posts => {
-        res.render('myblog', {posts: posts})
+        Post.findAll({
+            where: {
+                userId: user.id
+            },
+            include: [{
+            model: User}, {model: Comment}]
+        })
+        .then(posts => {
+            res.render('myblog', {posts: posts})
     });
     }
 
@@ -215,27 +217,33 @@ app.get('/myblog', (req, res) => {
 
 ////// All Blog Posts
 app.get('/blog', (req, res) => {
-    var user = req.session.user;
+    let user = req.session.user;
 
     if (user === undefined) {
         res.render('login', {user: user, message: 'Please log in to view bloggie.'});
     } else {
-    Post.findAll({
-            include: [ {
-                model: Comment},
-                { model: User
-            }]
-    })
+        Post.findAll({
+                include: [{
+                    model: Comment},
+                    { model: User
+                }]
+        })
         .then((posts)=> {
-        res.render('blog', {posts: posts})
-        });
+            User.findAll()
+                .then((users)=>{
+                    res.render('blog', {
+                        posts: posts,
+                        users: users
+                    })
+                })
+            });
     }
 })
 
 
 app.post('/blog', (req, res) => {
-    var user = req.session.user;
-    var comment = req.body.comment
+    let user = req.session.user;
+    let comment = req.body.comment
 
     if (user === undefined) {
             res.render('login', {user: user, message: 'Please log in to view bloggie.'});
@@ -243,51 +251,14 @@ app.post('/blog', (req, res) => {
         Comment.create({
             comment: comment,
             userId: user.id,
-            username: user.username,
             postId: req.body.postId
-        }).then(function(comments) {
+        })
+        .then(function(comments) {
             res.redirect('/blog');
         })
     }
 
 });
-
-//// Specific Blog
-/*app.get('/page', (req, res) => {
-    var user = req.session.user;
-});*/
-
-/*    if (user === undefined) {
-        res.render('login', {user: user, message: 'Please log in to view bloggie.'});
-    } else {
-
-        Post.findOne({
-            where: {
-                userId = user clicked on title
-            }
-        }).then(){
-            res.render('page')
-        }
-    }
-});
-/*
-
-/*app.post('/page', (req, res) => {
-    var post = req.body.body
-    var comment = req.body.comment
-  
-    if (user === undefined) {
-        res.render('login', {user: user, message: 'Please log in to view bloggie.'});
-    } else {
-        Comment.create({
-            comment = comment
-        }).then(function() {
-            res.redirect('/page');
-          })
-      }
-})
-
-*/
 
 const server = app.listen(8080, () => {
     console.log('server has started at ', server.address().port)
