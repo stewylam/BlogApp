@@ -95,7 +95,7 @@ app.post('/', (req, res) => {
                 username: nUsername,
                 password: nPassword
             }).then(function() {
-            res.render('login', {user: user, message: 'Congrats, you are Succesfully registered as a bloggie. Login to start blogging!'});
+            res.render('login', {user: user, message: 'Congrats, you are Succesfully registered to Prikkie. Login to start blogging!'});
             })
             })
         }
@@ -197,7 +197,7 @@ app.get('/myblog', (req, res) => {
     let user = req.session.user;
 
     if (user === undefined) {
-        res.render('login', {user: user, message: 'Please log in to view bloggie.'});
+        res.render('login', {user: user, message: 'Please log in to view prikkie.'});
     } else {
         Post.findAll({
             where: {
@@ -207,11 +207,15 @@ app.get('/myblog', (req, res) => {
             model: User}, {model: Comment}]
         })
         .then(posts => {
-            res.render('myblog', {posts: posts})
-    });
+            User.findAll()
+                .then((users)=>{
+                    res.render('blog', {
+                        posts: posts,
+                        users: users
+                    })
+                })
+        });
     }
-
-
 })
 
 
@@ -220,7 +224,7 @@ app.get('/blog', (req, res) => {
     let user = req.session.user;
 
     if (user === undefined) {
-        res.render('login', {user: user, message: 'Please log in to view bloggie.'});
+        res.render('login', {user: user, message: 'Please log in to view prikkie.'});
     } else {
         Post.findAll({
                 include: [{
@@ -246,7 +250,7 @@ app.post('/blog', (req, res) => {
     let comment = req.body.comment
 
     if (user === undefined) {
-            res.render('login', {user: user, message: 'Please log in to view bloggie.'});
+            res.render('login', {user: user, message: 'Please log in to view prikkie.'});
     } else {
         Comment.create({
             comment: comment,

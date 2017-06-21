@@ -1,11 +1,9 @@
 
-.board {
-	width: 100%;
-}
-
-h2 {
+h1 {
 	text-align: center;
 	font-family: 'Codystar', cursive;
+	margin-top: 30px;
+	margin-bottom: 30px;
 }
 
 li {
@@ -14,13 +12,9 @@ li {
 	font-weight: bold;
 }
 
-p, h3 {
-	text-align: center;
-}
-
-.message {
-	color: red;
-	text-align: left
+p {
+	text-align: left;
+	font-family: 'Montserrat', sans-serif
 }
 
 ::selection {

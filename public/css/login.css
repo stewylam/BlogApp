@@ -1,11 +1,8 @@
 
-.board {
-	width: 100%;
-}
-
-h2 {
+h1 {
 	text-align: center;
 	font-family: 'Codystar', cursive;
+	margin-top: 20px;
 }
 
 li {
@@ -14,8 +11,9 @@ li {
 	font-weight: bold;
 }
 
-p, h3 {
+p {
 	text-align: center;
+	font-family: Montserrat, sans-serif
 }
 
 .message {
@@ -27,3 +25,12 @@ p, h3 {
   color: red;
 }
 
+.container {
+	text-align: center;
+}
+
+
+.photo {
+	width: 70%;
+	margin-top: 60px;
+}

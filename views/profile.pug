@@ -1,28 +1,53 @@
 doctype html
 html
 	head
-		title Bloggie
+		link(href='https://fonts.googleapis.com/css?family=Codystar|Montserrat', rel='stylesheet')
+		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css', integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ', crossorigin='anonymous')
+		script(src='https://code.jquery.com/jquery-3.1.1.slim.min.js', integrity='sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n', crossorigin='anonymous')
+		script(src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js', integrity='sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb', crossorigin='anonymous')
+		script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js', integrity='sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn', crossorigin='anonymous')
+		style
+			include ../public/css/profile.css
+			include ../public/js/javascript.js
+		title Prikkie Profile
 	body
-		a(href='/') Home
-		br
-		a(href='/blog') Bloggie
-		br
-		a(class='button' href='/myblog') Your Bloggies
-		br
-		a(href='/logout') Log out
-		h1 Welcome to your profile <u>#{user.username}</u>
-		p <b>Name:</b> #{user.first} #{user.last}
-		p <b>Email:</b> #{user.email}
-		p <b>Username:</b> #{user.username}
-		br
-		h2 Share Awayyyy
-		form(action='/profile', method='post', autocomplete='off')
-			input(type='text', name='title', placeholder='Title', style='width: 350px')
+		.container
+			ul.nav.nav-tabs
+				li.nav-item
+					a.nav-link(href='/' class='logo') <img src='../img/post.png'> Prikkie
+				li.nav-item
+					a.nav-link(href='/') Home
+				li.nav-item
+					a.nav-link(href='/blog') Board
+				li.nav-item
+					a.nav-link.active(href='/profile') Profile
+				li.nav-item
+					a.nav-link(href='/login') Log In
+				li.nav-item
+					a.nav-link(href='/logout') Log Out
+		.container
+			h1 Welcome to your profile <b>#{user.username}</b>
 			br
 			br
-			textarea(type='text', name='body', style='width: 350px;height: 150px', placeholder='What would you like to share today?')
-			br
-			button(type='submit', value='Submit Message') Submit Your Blog
+		.container
+			.row
+				.col
+					img(class='photo' src='../img/avatar.jpg', alt='avatar')
+					p <b>Name:</b> #{user.first} #{user.last}
+					p <b>Email:</b> #{user.email}
+					p <b>Username:</b> #{user.username}
+					p <a href='/myblog'>See all your advertisements</a>
+				.col
+					h2(style='font-family: Montserrat, sans-serif; text-align: left') What do you like to advertise?
+					br
+					form(action='/profile', method='post', autocomplete='off')
+						input(type='text', name='title', placeholder='Title', style='width: 350px')
+						br
+						br
+						textarea(type='text', name='body', style='width: 350px;height: 160px', placeholder='e.g. selling stuff, offering a service or requesting something.')
+						br
+						br
+						button(type='submit', value='Submit Message') Submit Your Blog
 
 
 

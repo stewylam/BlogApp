@@ -1,47 +1,66 @@
 doctype html
 html
 	head
+		link(href='https://fonts.googleapis.com/css?family=Codystar|Montserrat', rel='stylesheet')
+		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css', integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ', crossorigin='anonymous')
+		script(src='https://code.jquery.com/jquery-3.1.1.slim.min.js', integrity='sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n', crossorigin='anonymous')
+		script(src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js', integrity='sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb', crossorigin='anonymous')
+		script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js', integrity='sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn', crossorigin='anonymous')
 		style
 			include ../public/css/stylesheet.css
 			include ../public/js/javascript.js
-		title Bloggie
+		title Prikkie
 	body
-		a(href='/') Home
+		.container
+			ul.nav.nav-tabs
+				li.nav-item
+					a.nav-link(href='/' class='logo') <img src='../img/post.png'> Prikkie
+				li.nav-item
+					a.nav-link.active(href='/') Home
+				li.nav-item
+					a.nav-link(href='/blog') Board
+				li.nav-item
+					a.nav-link(href='/profile') Profile
+				li.nav-item
+					a.nav-link(href='/login') Log In
+				li.nav-item
+					a.nav-link(href='/logout') Log Out
 		br
-		a(class='button' href='/blog') Bloggie
 		br
-		a(class='button' href='/profile') Profile
+		.container
+			.row
+				.col
+					h2(style='font-family: Codystar, cursive; font-weight: bold') Welcome to Prikkie <img src='../img/post.png'> 
+					br
+					p(style='font-family: Montserrat, sans-serif, text-align: center;') Prikkie allows you to write advertisement digitally. You can find different advertisement and comment to it.<br>From selling bicycles to babysitting services.
+					h3 Pin your advertisement(s) now!
 		br
-		a(href='/logout') Log out
-		br
-		br
-		span
-			img(class='logo' src='../img/font.png')
-			h1 Welcome to Bloggie
+		.container
+			.row
+				.col
+					form(class='sign' action='/', method='post', autocomplete='off')
+						fieldset
+							p(style='text-align: left;') <u><b>New</u></b> to Prikkie? Register first and start posting your advertisements.
+							p(class='message') #{message}		
+							input(type='text', name='first', placeholder='First Name')
+							br
+							input(type='text', name='last', placeholder='Last Name')
+							br
+							input(type='text', name='email', placeholder='Email')
+							br
+							input(type='text', name='nUser', placeholder='Choose your Username')
+							br
+							input(type='password', name='nPass', placeholder='Choose your Password')
+							br
+							br
+							input(type='submit', value='Register')
+							br
+							br
+							p(style='text-align: left;') Already an account? Log in <a href='/login'>here</a>
 
-		span(class='element')
-		p Lorizzle ipsizzle sheezy cool amizzle, dawg adipiscing elit. Nullam sure velizzle, sure volutpizzle, suscipizzle phat, brizzle vizzle, arcu. Pellentesque i'm in the shizzle phat. Brizzle erizzle. Break yo neck, yall izzle dolor go to hizzle turpizzle tempus dope. Maurizzle fizzle fo shizzle izzle turpizzle. izzle tortizzle. Pellentesque cool rhoncizzle bling bling. In hac boofron platea dictumst. Crackalackin dapibizzle. Shizznit tellizzle urna, pretizzle eu, shiz ac, fo shizzle my nizzle bow wow wow, nunc. We gonna chung suscipizzle. Integer sempizzle bling bling crazy purus.
+				
+				.col
+					img(src='../img/board.jpg', class='board' alt='Advertisement Board')
 
-		h3 <b>Share you passions with the world. Start blogging now!</b>
 
-		form(class='sign' action='/', method='post', autocomplete='off')
-			fieldset
-				legend <u><b>New</u></b> to Bloggie? Register first and start blogging!  
-				p(style= 'color: red') #{message}		
-				input(type='text', name='first', placeholder='First Name')
-				br
-				input(type='text', name='last', placeholder='Last Name')
-				br
-				input(type='text', name='email', placeholder='Email')
-				br
-				input(type='text', name='nUser', placeholder='Choose your Username')
-				br
-				input(type='password', name='nPass', placeholder='Choose your Password')
-				br
-				br
-				input(type='submit', value='Register')
-
-		p already a bloggie? Log in <a href='/login'>here
-
-		script(type='text/javacript' src='../public/js/javascript.js')
 

@@ -1,30 +1,51 @@
 doctype html
 html
 	head
-	title Blog
+		link(href='https://fonts.googleapis.com/css?family=Codystar|Montserrat', rel='stylesheet')
+		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css', integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ', crossorigin='anonymous')
+		script(src='https://code.jquery.com/jquery-3.1.1.slim.min.js', integrity='sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n', crossorigin='anonymous')
+		script(src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js', integrity='sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb', crossorigin='anonymous')
+		script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js', integrity='sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn', crossorigin='anonymous')
+		style
+			include ../public/css/blog.css
+			include ../public/js/javascript.js
+	title Board
 	body
-		a(href='/') Home
-		br
-		a(class='button' href='/profile') Profile
-		br
-		a(class='button' href='/myblog') Your Bloggie
-		br
-		a(href='/logout') Log out
-		h3 All Blogs
-		each post in posts
-			p <b>#{post.title}</b> <i>by: #{post.user.username}</i>
-			p #{post.body}
-			p #{post.createdAt}
-			hr(size='1', width='20%', align='left')
-			each comment in post.comments
-				each user in users
-					if comment.userId === user.id
-						p <i>#{user.username} says</i> #{comment.comment}
-			form(action='/blog', method='post', autocomplete='off')
-				input(type='text', name='comment', placeholder='Comment')
-				input(type='hidden', value=post.id, name='postId')
-				button(type='submit', value='Comment') Comment			
-			hr(size='1')
+		.container
+			ul.nav.nav-tabs
+				li.nav-item
+					a.nav-link(href='/' class='logo') <img src='../img/post.png'> Prikkie
+				li.nav-item
+					a.nav-link(href='/') Home
+				li.nav-item
+					a.nav-link.active(href='/blog') Board
+				li.nav-item
+					a.nav-link(href='/profile') Profile
+				li.nav-item
+					a.nav-link(href='/login') Log In
+				li.nav-item
+					a.nav-link(href='/logout') Log Out
+		.container
+				h3 All Advertisements
+				br
+		
+		.container
+			.row
+				each post in posts
+					.col-4
+						h2 <b>#{post.title}</b> <i>from: #{post.user.username}</i>
+						p #{post.body}
+						p #{post.createdAt}
+						hr(size='1', width='20%', align='left')
+						each comment in post.comments
+							each user in users
+								if comment.userId === user.id
+									p(style='color: blue;') <i>#{user.username} says</i> <b>#{comment.comment}</b>
+						form(action='/blog', method='post', autocomplete='off')
+							input(type='text', name='comment')
+							input(type='hidden', value=post.id, name='postId')
+							button(type='submit', value='Comment') Comment			
+						hr(size='1')
 
 
 

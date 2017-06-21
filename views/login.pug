@@ -1,20 +1,50 @@
 doctype html
 html
 	head
-		title Bloggie
+		link(href='https://fonts.googleapis.com/css?family=Codystar|Montserrat', rel='stylesheet')
+		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css', integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ', crossorigin='anonymous')
+		script(src='https://code.jquery.com/jquery-3.1.1.slim.min.js', integrity='sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n', crossorigin='anonymous')
+		script(src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js', integrity='sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb', crossorigin='anonymous')
+		script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js', integrity='sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn', crossorigin='anonymous')
+		style
+			include ../public/css/login.css
+			include ../public/js/javascript.js
+		title Prikkie Login	
 	body
-		h1 Bloggie
-		form(class='logg' action='/login', method='post', autocomplete='off')
-			fieldset
-				legend Login to see all blog messages and start blogging
-				p(style= 'color: red') #{message}
-				input(type='text', name='user', value='sl', placeholder='Username')
-				br 
-				input(type='password', name='pass', value='sl', placeholder='Password')
-				br
-				br
-				input(type='submit', value='Login')
-		
-		p New to bloggie? Register <a href='/'>first!
+		.container
+			ul.nav.nav-tabs
+				li.nav-item
+					a.nav-link(href='/' class='logo') <img src='../img/post.png'> Prikkie
+				li.nav-item
+					a.nav-link(href='/') Home
+				li.nav-item
+					a.nav-link(href='/blog') Board
+				li.nav-item
+					a.nav-link(href='/profile') Profile
+				li.nav-item
+					a.nav-link.active(href='/login') Log In
+				li.nav-item
+					a.nav-link(href='/logout') Log Out
+		.container
+			.row
+				.col
+					br
+					h1 Login
+					p(style='font-family: Montserrat, sans-serif, text-align: center;') Login to post and see all advertisements
+
+					form(class='logg' action='/login', method='post', autocomplete='off')
+						p(class='message' style='text-align: center') #{message}
+						input(type='text', name='user', placeholder='Username')
+						br 
+						input(type='password', name='pass', placeholder='Password')
+						br
+						br
+						input(type='submit', value='Login')
+					br
+					p(class='text') New to bloggie? Register <a href='/'>first!</a>
+
+				.col
+					img(class='photo' src='../img/its.jpg', alt='Advertisements')
+
 
 
