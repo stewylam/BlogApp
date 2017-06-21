@@ -4,9 +4,9 @@ You can find different advertisement and comment to it.
 From selling bicycles to babysitting services.
 Start pin your advertisement(s) now!
 
-![schermopname 155](https://user-images.githubusercontent.com/25740926/27391560-8adf7d8e-56a4-11e7-8551-9804b892cc7d.png)
-![schermopname 156](https://user-images.githubusercontent.com/25740926/27391561-8af468de-56a4-11e7-9f29-4169fb1b5df1.png)
 ![schermopname 153](https://user-images.githubusercontent.com/25740926/27391562-8afbadec-56a4-11e7-9b02-4761d9f4a6c2.png)
+![schermopname 156](https://user-images.githubusercontent.com/25740926/27391561-8af468de-56a4-11e7-9f29-4169fb1b5df1.png)
+![schermopname 155](https://user-images.githubusercontent.com/25740926/27391560-8adf7d8e-56a4-11e7-8551-9804b892cc7d.png)
 ![schermopname 154](https://user-images.githubusercontent.com/25740926/27391563-8afed15c-56a4-11e7-845a-e4250a4a1e10.png)
 ![schermopname 157](https://user-images.githubusercontent.com/25740926/27391564-8afebf78-56a4-11e7-8d02-33c6fa04585d.png)
 
