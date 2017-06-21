@@ -4,11 +4,11 @@ You can find different advertisement and comment to it.
 From selling bicycles to babysitting services.
 Start pin your advertisement(s) now!
 
-![schermopname 153](https://user-images.githubusercontent.com/25740926/27391562-8afbadec-56a4-11e7-9b02-4761d9f4a6c2.png)
-![schermopname 156](https://user-images.githubusercontent.com/25740926/27391561-8af468de-56a4-11e7-9f29-4169fb1b5df1.png)
-![schermopname 155](https://user-images.githubusercontent.com/25740926/27391560-8adf7d8e-56a4-11e7-8551-9804b892cc7d.png)
-![schermopname 154](https://user-images.githubusercontent.com/25740926/27391563-8afed15c-56a4-11e7-845a-e4250a4a1e10.png)
-![schermopname 157](https://user-images.githubusercontent.com/25740926/27391564-8afebf78-56a4-11e7-8d02-33c6fa04585d.png)
+![1](https://user-images.githubusercontent.com/25740926/27393569-f81d188e-56a9-11e7-881e-f2de88dabdbe.png)
+![2](https://user-images.githubusercontent.com/25740926/27393570-f835447c-56a9-11e7-8750-f3ab295def8e.png)
+![3](https://user-images.githubusercontent.com/25740926/27393572-f83a3dc4-56a9-11e7-84b6-62e2fe7d50f1.png)
+![4](https://user-images.githubusercontent.com/25740926/27393574-f83de0a0-56a9-11e7-80a1-f862253a0f9c.png)
+![5](https://user-images.githubusercontent.com/25740926/27393573-f83cc5f8-56a9-11e7-934b-0cfe3e0bbc4d.png)
 
 Project Specification
 Create a blogging application that allows users to do the following:
